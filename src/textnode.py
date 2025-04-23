@@ -1,4 +1,5 @@
 from enum import Enum
+from converters import *
 
 class TextType(Enum):
     TEXT = 1

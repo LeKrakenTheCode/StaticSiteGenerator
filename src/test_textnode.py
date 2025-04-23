@@ -1,7 +1,6 @@
 import unittest
 
-from textnode import *
-from htmlnode import *
+from converters import *
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
@@ -24,6 +23,15 @@ class TestTextNode(unittest.TestCase):
         html1_node = text_node_to_html_node(node1)
         self.assertEqual(html1_node.children, None)
         self.assertEqual(html1_node.to_html(), "<img src=\"https://hi.com/image.png\" alt=\"Bad Image\"></img>")
+
+    def test_converter(self):
+        node = TextNode("This is text with a `code block` word", TextType.TEXT)
+        new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
+        self.assertListEqual(new_nodes, [
+            TextNode("This is text with a ", TextType.TEXT),
+            TextNode("code block", TextType.CODE),
+            TextNode(" word", TextType.TEXT),
+        ])
 
 if __name__ == "__main__":
     unittest.main()
